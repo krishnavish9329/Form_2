@@ -5,18 +5,41 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import createContact from "@/actions/index"
 const ContactForm = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState(null);
+
     async function onSubmit(formdata) {
         setIsSubmitted(true)
+        setMessage("")
 
+        const result = await createContact(formdata)
+        console.log(result)
+        if(result.success)
+        {
+            setMessage(result.message)
+
+            const form = document.getElementById("contact-form")
+            form.reset()
+        }
+        else
+        {
+            setMessage(result.error)
+        }
+        setIsSubmitted(false)
     }
     return (
         <Card className="w-full max-w-2xl mx-auto">
             <CardHeader>
                 <CardTitle className="text-left">Contact Us</CardTitle>
             </CardHeader>
+            {message &&
+            <div>
+                {message}
+            </div>
+
+            }
             <CardContent>
                 <form id="contact-form" action={onSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -35,8 +58,8 @@ const ContactForm = () => {
                             <input id="subject" name="subject" type="text" required disabled={isSubmitted} className=" h-[69%] w-full border-1 border-gray-400 rounded-sm pl-1 hover:border-gray-600 facus:border-gray-600 "/>
                         </div>
                         <div className="space-y-2">
-                            <Label htmlfor="messgae">Messgae</Label>
-                            <Textarea id="messgae" name="messgae" type="text" disabled={isSubmitted}  className="min-h-[120px] hover:border-gray-600 facus:border-gray-600" />
+                            <Label htmlfor="message">Message</Label>
+                            <Textarea id="message" name="message" type="text" disabled={isSubmitted}  className="min-h-[120px] hover:border-gray-600 facus:border-gray-600" />
                         </div>
                         <Button type="submit" disabled={isSubmitted} className="w-full h-10 ">
                             {isSubmitted ? "Sending..." : "Send Message"}
