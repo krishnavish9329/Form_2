@@ -1,0 +1,38 @@
+import mongoose from 'mongoose';
+const contactSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, 'Name is required'],
+        trim: true,
+        maxlenght: [100, 'Name must be less than 100 characters']
+    },
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        trim: true,
+        maxlenght: [100, 'Email must be less than 100 characters']
+    },
+    subject: {
+        type: String,
+        required: [true, 'Message is required'],
+        trim: true,
+        maxlenght: [1000, 'Message must be less than 1000 characters']
+    },
+    message: {
+        type: String,
+        required: [true, 'Message is required'],
+        trim: true,
+        maxlenght: [1000, 'Message must be less than 1000 characters']
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending'
+    }
+
+
+}, { timestamps: true });
+
+const Contact = mongoose.models.Contact || mongoose.model('Contact', contactSchema);
+
+export default Contact;
