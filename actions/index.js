@@ -43,3 +43,23 @@ export default async function createContact(formData)
 
     }
 }
+
+export  async function getContacts()
+{
+    try{
+        await dbConnection();
+        const contacts = await Contact/find().sort({createdAt:-1}).lean()
+        return contacts.map((contact)=>({
+            ...contact,
+            _id:contact._id.toString(),
+            createdAt:contact.createdAt,
+            updatedAt:contact.updatedAt
+        }))
+    }
+    catch(error)
+    {
+        console.log("Error on get contact",error)
+        return[]
+    }
+    
+}
