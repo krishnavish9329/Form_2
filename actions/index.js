@@ -48,7 +48,7 @@ export  async function getContacts()
 {
     try{
         await dbConnection();
-        const contacts = await Contact/find().sort({createdAt:-1}).lean()
+        const contacts = await Contact.find().sort({createdAt:-1}).lean()
         return contacts.map((contact)=>({
             ...contact,
             _id:contact._id.toString(),
