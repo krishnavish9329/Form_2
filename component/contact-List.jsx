@@ -7,26 +7,25 @@ const ContactList = async () => {
     const contacts = await getContacts();
 
     return (
-        <div>
-            <div>
-                <h2>Contact Messages</h2>
-                <Badge veriant="secondary " >{contacts.length} Messages</Badge>
-
+        <div className="space-y-6  mt-3">
+            <div className=" flex item-center justify-between  ">
+                <h2 className=" text-2xl font-bold">Contact Messages</h2>
+                <Badge veriant="secondary"  className="bg-white border-black text-black h-7 rounded-2">{contacts.length} Messages</Badge>
             </div>
             {
                 contacts.length === 0 ?
                     (
-                        <Card>
-                            <CardContent>
-                                <Mail />
-                                <h3>No messagae yet</h3>
+                        <Card >
+                            <CardContent className="flex flex-col item-center justify-center py-12">
+                                <Mail className="h-12 w-12 text-muted-foreground mb-4"/>
+                                <h3 className="text-lg font-semibold mb-2">No messagae yet</h3>
                             </CardContent>
                         </Card>
                     ) :
                     (
                         contacts.map((contact) => (
-                            <Card key="contact._id">
-                                <CardHeader>
+                            <Card key="contact._id" className="rounded-sm border-1" >
+                                <CardHeader className=" flex flex-col justify-between ">
                                     <div>
                                         <div>
                                             <CardTitle>
