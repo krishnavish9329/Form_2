@@ -3,6 +3,7 @@ import { Badge } from "../components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail } from "lucide-react";
 import { Button } from "@base-ui/react";
+import { updateContsct} from "@/actions";
 const ContactList = async () => {
     const contacts = await getContacts();
 
@@ -25,35 +26,42 @@ const ContactList = async () => {
                     (
                         contacts.map((contact) => (
                             <Card key="contact._id" className="rounded-sm border-1" >
-                                <CardHeader className=" flex flex-col justify-between ">
-                                    <div>
+                                <CardHeader className=" flex flex-col justify-between">
+                                    <div className = "flex justify-between item-center w-full">
                                         <div>
-                                            <CardTitle>
+                                            <CardTitle className="text-lg font-bold mb-2">
                                                 {contact.subject}
                                             </CardTitle>
                                             <p>
                                                 From: {contact.name} ({contact.mail})
                                             </p>
                                         </div>
-                                        <Badge veriant={contact.status === 'new' ? 'default' : 'secondary'}>
+                                        <Badge veriant={contact.status === 'new' ? 'default' : 'secondary'}
+                                         className='w-20 h-7 flex items-center justify-center rounded text-sm '
+                                        >
                                             {contact.status}
                                         </Badge>
-
                                     </div>
                                 </CardHeader>
                                 <CardContent>
-                                    <p>
+                                    <p className="text=sm mb-2">
                                         {contact.message}
                                     </p>
-                                    <div>
+                                    <div className="flex flex-row  justify-between border-t-1 border-gray-200 py-2" >
                                         <p>
                                             {new Date(contact.createdAt).toLocaleString()}
                                         </p>
-                                        <div>
+                                        <div  >
                                             {
                                                 contact.status === 'new' && (
-                                                    <from >
-                                                        <Button veriant="outline" size='sm' type="submit" >
+                                                    <from  action ={ async ()=>{
+                                                        "use server"
+                                                        await updateContsct(contact._id, "read")
+                                                    }}>
+                                                        <Button veriant="outline" size='sm' type="submit"
+                                                        className="w-26 h-7 flex items-center justify-center rounded text-sm border-black 
+                                                        border-2 text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                        >
                                                             Mark as read
                                                         </Button>
                                                     </from>
@@ -62,7 +70,9 @@ const ContactList = async () => {
                                             {
                                                 contact.status === 'read' && (
                                                     <from >
-                                                        <Button veriant="outline" size='sm' type="submit" >
+                                                        <Button veriant="outline" size='sm' type="submit"
+                                                        className="w-26 h-7 flex items-center justify-center rounded text-sm border-black border-2  text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                        >
                                                             Mark as Replied
                                                         </Button>
                                                     </from>

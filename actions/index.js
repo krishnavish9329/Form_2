@@ -63,3 +63,23 @@ export  async function getContacts()
     }
     
 }
+
+export const updateContsct = async (contactId, status)=>{
+    try{
+        console.log("status",status)
+        await dbConnection();
+        const contact = await Contact.findByIdAndUpdate(contactId, {status})
+        return {
+            success:true,
+            message:"Contact status updated successfully"
+        };
+    }
+    catch(error)
+    {
+        console.log("Error on update contact",error)
+        return {
+            success:false,
+            message:"Error updating contact status"
+        };
+    }
+}
