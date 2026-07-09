@@ -25,7 +25,7 @@ const ContactList = async () => {
                     ) :
                     (
                         contacts.map((contact) => (
-                            <Card key="contact._id" className="rounded-sm border-1" >
+                            <Card key={contact._id} className="rounded-sm border-1" >
                                 <CardHeader className=" flex flex-col justify-between">
                                     <div className = "flex justify-between item-center w-full">
                                         <div>
@@ -54,28 +54,31 @@ const ContactList = async () => {
                                         <div  >
                                             {
                                                 contact.status === 'new' && (
-                                                    <from  action ={ async ()=>{
+                                                    <form action ={ async ()=>{
                                                         "use server"
                                                         await updateContsct(contact._id, "read")
                                                     }}>
-                                                        <Button veriant="outline" size='sm' type="submit"
+                                                        <Button variant="outline" size='sm' type="submit"
                                                         className="w-26 h-7 flex items-center justify-center rounded text-sm border-black 
                                                         border-2 text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                                         >
                                                             Mark as read
                                                         </Button>
-                                                    </from>
+                                                    </form>
                                                 )
                                             }
                                             {
                                                 contact.status === 'read' && (
-                                                    <from >
+                                                    <form  action ={ async ()=>{
+                                                        "use server"
+                                                        await updateContsct(contact._id, "Replied")
+                                                    }}>
                                                         <Button veriant="outline" size='sm' type="submit"
                                                         className="w-26 h-7 flex items-center justify-center rounded text-sm border-black border-2  text-black hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                                         >
                                                             Mark as Replied
                                                         </Button>
-                                                    </from>
+                                                    </form>
                                                 )
                                             }
 

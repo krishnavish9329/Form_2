@@ -1,7 +1,7 @@
 "use server";
 import dbConnection from "@/lib/db";
 import Contact from "@/modal/Contact";
-import { Rethink_Sans } from "next/font/google";
+import { revalidatePath } from "next/cache";
 
 export default async function createContact(formData)
 {
@@ -69,6 +69,7 @@ export const updateContsct = async (contactId, status)=>{
         console.log("status",status)
         await dbConnection();
         const contact = await Contact.findByIdAndUpdate(contactId, {status})
+        revalidatePath("/contacts ");
         return {
             success:true,
             message:"Contact status updated successfully"
